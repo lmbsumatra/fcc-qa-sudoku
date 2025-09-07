@@ -1,21 +1,26 @@
 class SudokuSolver {
-
   validate(puzzleString) {
-    if (!puzzleString) return { error: 'Required field missing' };
-    if (puzzleString.length !== 81) return { error: 'Expected puzzle to be 81 characters long' };
-    if (/[^1-9.]/.test(puzzleString)) return { error: 'Invalid characters in puzzle' };
+    
+    if (/[^1-9.]/.test(puzzleString)) {
+      return { error: "Invalid characters in puzzle" };
+    }
+    if (puzzleString.length !== 81) {
+      return { error: "Puzzle cannot be solved" };
+    }
     return { valid: true };
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
     const start = row * 9;
-    const rowValues = puzzleString.slice(start, start + 9);
-    return !rowValues.includes(value);
+    for (let c = 0; c < 9; c++) {
+      if (c !== column && puzzleString[start + c] === value) return false;
+    }
+    return true;
   }
 
   checkColPlacement(puzzleString, row, column, value) {
     for (let r = 0; r < 9; r++) {
-      if (puzzleString[r * 9 + column] === value) return false;
+      if (r !== row && puzzleString[r * 9 + column] === value) return false;
     }
     return true;
   }
@@ -26,7 +31,12 @@ class SudokuSolver {
 
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 3; c++) {
-        if (puzzleString[(startRow + r) * 9 + (startCol + c)] === value) {
+        const cellRow = startRow + r;
+        const cellCol = startCol + c;
+        if (
+          (cellRow !== row || cellCol !== column) &&
+          puzzleString[cellRow * 9 + cellCol] === value
+        ) {
           return false;
         }
       }
@@ -35,6 +45,9 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
+    const validation = this.validate(puzzleString);
+    if (validation.error) return validation;
+
     let arr = puzzleString.split("");
 
     const backtrack = () => {
@@ -59,7 +72,7 @@ class SudokuSolver {
       return false;
     };
 
-    return backtrack() ? arr.join("") : null;
+    return backtrack() ? arr.join("") : "Puzzle cannot be solved";
   }
 }
 
