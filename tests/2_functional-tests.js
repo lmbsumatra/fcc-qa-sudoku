@@ -41,7 +41,7 @@ suite("Functional Tests", () => {
     chai
       .request(server)
       .post("/api/solve")
-      .send({ puzzle: "1.5..2.84.." + "x".repeat(71) })
+      .send({ puzzle: "1.5..2.84." + "x".repeat(71) })
       .end((err, res) => {
         assert.equal(res.status, 200);
         assert.deepEqual(res.body, { error: "Invalid characters in puzzle" });
@@ -57,7 +57,7 @@ suite("Functional Tests", () => {
       .end((err, res) => {
         assert.equal(res.status, 200);
         assert.deepEqual(res.body, {
-          error: "Puzzle cannot be solved",
+          error: "Expected puzzle to be 81 characters long",
         });
         done();
       });
@@ -69,7 +69,7 @@ suite("Functional Tests", () => {
       .post("/api/solve")
       .send({
         puzzle:
-          "115..2.84..63.12.7.2..5.....9..1....8.2.3674.3.....9..5.....7.2.4.12.83.1.7.2..9",
+          "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926777.37.",
       })
       .end((err, res) => {
         assert.equal(res.status, 200);
@@ -193,7 +193,7 @@ suite("Functional Tests", () => {
       .end((err, res) => {
         assert.equal(res.status, 200);
         assert.deepEqual(res.body, {
-          error: "Puzzle cannot be solved",
+          error: "Expected puzzle to be 81 characters long",
         });
         done();
       });

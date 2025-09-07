@@ -1,12 +1,12 @@
 class SudokuSolver {
   validate(puzzleString) {
+    if (puzzleString.length !== 81) return { error: "Expected puzzle to be 81 characters long" };
+
     
     if (/[^1-9.]/.test(puzzleString)) {
       return { error: "Invalid characters in puzzle" };
     }
-    if (puzzleString.length !== 81) {
-      return { error: "Puzzle cannot be solved" };
-    }
+
     return { valid: true };
   }
 
@@ -72,7 +72,7 @@ class SudokuSolver {
       return false;
     };
 
-    return backtrack() ? arr.join("") : "Puzzle cannot be solved";
+    return backtrack() ? arr.join("") : { error: 'Puzzle cannot be solved' };
   }
 }
 

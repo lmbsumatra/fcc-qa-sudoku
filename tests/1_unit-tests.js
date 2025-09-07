@@ -16,7 +16,7 @@ suite("Unit Tests", () => {
 
   test("Logic handles a puzzle string that is not 81 characters in length", () => {
     assert.deepEqual(solver.validate("123"), {
-      error: "Puzzle cannot be solved",
+      error: "Expected puzzle to be 81 characters long",
     });
   });
 
@@ -60,7 +60,7 @@ suite("Unit Tests", () => {
 
   test("Invalid puzzle strings fail the solver", () => {
     const invalidPuzzle =
-      "115..2.84..63.12.7.2..5.....9..1....8.2.3674.3.....9..5.....7.2.4.12.83.1.7.2..9";
+      "1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926777.77.";
     assert.deepEqual(solver.solve(invalidPuzzle), {
       error: "Puzzle cannot be solved",
     });
